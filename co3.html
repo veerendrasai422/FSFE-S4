@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head><title>JS Fundamentals - All in One</title></head>
+<body>
+<h2>JS Fundamentals - Open Console (F12) to see Output</h2>
+<button onclick="runAll()">Run All Examples</button>
+<p id="out"></p>
+
+<script>
+function runAll(){
+  let out = "";
+
+  // 1. DATA TYPES - 7 Primitive + 3 Object
+  let s = "Hello"; // String
+  let n = 42; // Number
+  let b = true; // Boolean
+  let u; // Undefined
+  let nl = null; // Null
+  let big = 123n; // BigInt
+  let sym = Symbol("id"); // Symbol
+  out += "Types: " + typeof s + ", " + typeof n + ", " + typeof b + ", " + typeof u + ", " + typeof nl + " (bug!), " + typeof big + "<br>";
+
+  // Object, Array, Function
+  const student = { name: "Ravi", age: 18 };
+  const marks = [85, 90, 75];
+  out += "Object: " + student.name + " | Array: " + marks[1] + "<br>";
+
+  // 2. VARIABLES - var vs let vs const
+  var a = 10; a = 20; // var - can reassign, function scope
+  let x = 5; x = 10; // let - can reassign, block scope
+  const y = 15; // const - cannot reassign
+  const arr = [2,4]; arr.push(6); // const array CAN change inside
+  out += "var/let/const: " + a + ", " + x + ", " + y + " | Const Array Length: " + arr.length + "<br>";
+
+  // Dynamic Typing - Java vs JS
+  let score = 90; score = "pass"; // In Java this is Error, in JS Allowed
+  out += "Dynamic Typing: " + score + "<br>";
+
+  // 3. FUNCTIONS - 3 ways + Parameters / Arguments / Return
+  function add(a,b){ return a+b; } // Declaration
+  const square1 = function(x){ return x*x; }; // Expression
+  const square2 = (x) => x*x; // Arrow
+  function average(m1,m2,m3){ return (m1+m2+m3)/3; } // m1,m2,m3 = Parameters
+  out += "Functions: add(4,6)=" + add(4,6) + " | square(5)=" + square2(5) + " | average(80,90,70)=" + average(80,90,70) + "<br>";
+  // 80,90,70 = Arguments
+
+  // 4. SCOPE - Global, Function, Block + Shadowing
+  let city = "Hyderabad"; // Global
+  function showCity(){ let secret = 42; return city; } // secret = Function scope, cannot use outside
+  let shadow = 3;
+  function f(){ let shadow = 8; return shadow; } // Shadowing - nearest wins
+  out += "Scope: " + showCity() + " | Shadowing: " + f() + " " + shadow + "<br>";
+
+  // Block Scope
+  if(true){ let bx = 10; const by = 20; var bz = 30; }
+  // console.log(bx); // Error - block scope
+  out += "Block: var escapes block = 30, let/const do NOT<br>";
+
+  // 5. CLOSURES - Remembers + Private State
+  function createCounter(){
+    let count = 0;
+    return function(){ count++; return count; };
+  }
+  const next = createCounter();
+  out += "Closure Counter: " + next() + ", " + next() + ", " + next() + "<br>";
+
+  function makeWallet(){
+    let balance = 100; // Private - cannot access directly
+    return {
+      deposit(amount){ balance += amount; },
+      getBalance(){ return balance; }
+    };
+  }
+  const wallet = makeWallet();
+  wallet.deposit(50);
+  out += "Closure Wallet Balance: " + wallet.getBalance() + "<br>";
+
+  document.getElementById("out").innerHTML = out;
+  console.log(out.replaceAll("<br>","\n"));
+}
+runAll();
+</script>
+</body>
+</html>

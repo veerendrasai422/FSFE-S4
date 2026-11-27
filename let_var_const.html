@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>var let const - Redeclaration</title>
+  <style>
+    body{font-family:Arial; padding:20px; background:#f2f2f2;}
+    h2{color:#1a237e;}
+    .box{background:white; padding:15px; margin:10px 0; border-left:5px solid #1a237e; border-radius:8px;}
+    .ok{color:green; font-weight:bold;}
+    .err{color:red; font-weight:bold;}
+    code{background:#eee; padding:2px 6px; border-radius:4px;}
+  </style>
+</head>
+<body>
+
+<h2>var vs let vs const - Redeclaration Test</h2>
+<div id="out"></div>
+
+<script>
+let out = "";
+
+// 1. var - Redeclare OK
+var a = 10;
+var a = 20;
+out += "<div class='box'><b>1. var</b><br>";
+out += "<code>var a = 10; var a = 20;</code><br>";
+out += "Result: <span class='ok'>a = " + a + " - Redeclare OK</span></div>";
+
+// 2. let - Update OK, Redeclare ERROR
+let x = 5;
+x = 10;
+out += "<div class='box'><b>2. let - Update</b><br>";
+out += "<code>let x = 5; x = 10;</code><br>";
+out += "Result: <span class='ok'>x = " + x + " - Update OK</span></div>";
+
+try {
+  eval("let x = 99;");
+  out += "<div class='box'>let Redeclare: OK</div>";
+} catch(e) {
+  out += "<div class='box'><b>3. let - Redeclare</b><br>";
+  out += "<code>let x = 5; let x = 10;</code><br>";
+  out += "Result: <span class='err'>ERROR - " + e.message + "</span></div>";
+}
+
+// 3. const - Redeclare ERROR + Update ERROR
+const y = 15;
+out += "<div class='box'><b>4. const</b><br>";
+out += "<code>const y = 15;</code><br>";
+out += "Result: <span class='ok'>y = " + y + " - Fixed</span></div>";
+
+try {
+  eval("const y = 20;");
+  out += "<div class='box'>const Redeclare: OK</div>";
+} catch(e) {
+  out += "<div class='box'><b>5. const - Redeclare</b><br>";
+  out += "<code>const y = 15; const y = 20;</code><br>";
+  out += "Result: <span class='err'>ERROR - " + e.message + "</span></div>";
+}
+
+try {
+  eval("y = 20;");
+} catch(e) {
+  out += "<div class='box'><b>6. const - Update</b><br>";
+  out += "<code>const y = 15; y = 20;</code><br>";
+  out += "Result: <span class='err'>ERROR - Assignment to constant variable</span></div>";
+}
+
+// 4. const Array - Redeclare ERROR, push OK
+const arr = [2, 4];
+arr.push(6);
+out += "<div class='box'><b>7. const Array</b><br>";
+out += "<code>const arr = [2,4]; arr.push(6);</code><br>";
+out += "Result: <span class='ok'>arr = [" + arr + "] | Length = " + arr.length + "</span><br>";
+out += "Reason: Address Fixed, Items Can Change</div>";
+
+try {
+  eval("const arr = [5];");
+} catch(e) {
+  out += "<div class='box'><b>8. const Array - Redeclare</b><br>";
+  out += "<code>const arr = [2,4]; const arr = [5];</code><br>";
+  out += "Result: <span class='err'>ERROR - " + e.message + "</span></div>";
+}
+
+// Final Summary
+out += "<div class='box'><b>Final Output:</b><br>";
+out += "var/let/const: " + a + ", " + x + ", " + y + " | Const Array Length: " + arr.length + "</div>";
+
+document.getElementById("out").innerHTML = out;
+</script>
+
+</body>
+</html>

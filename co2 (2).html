@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 - All CSS Topics</title>
+<style>
+:root{ --main-color: #2563eb; --space: 1rem; }
+*{ box-sizing: border-box; }
+body{ font-family: Arial; margin:0; background:#f1f5f9; color:#111; }
+header{ background:var(--main-color); color:white; padding:20px; text-align:center; }
+section{ background:white; margin:15px; padding:20px; border-radius:10px; }
+
+/* 1. CASCADE */
+.cascade p{ color:red; }
+.cascade p{ color:blue; }
+
+/* 2. SPECIFICITY */
+.spec p{ color:red; }
+.spec .card p{ color:green; }
+#app p{ color:blue; }
+
+/* 3. INHERITANCE */
+.inherit{ color:#b91c1c; font-family:Verdana; }
+
+/* 4. BOX MODEL */
+.box{
+  width:200px; padding:20px;
+  border:5px solid black; margin:10px;
+  background:#fde68a; box-sizing:border-box;
+}
+
+/* 5. FLEXBOX */
+.toolbar{
+  display:flex; justify-content:space-between;
+  align-items:center; gap:1rem; flex-wrap:wrap;
+  background:#e0e7ff; padding:10px; border-radius:8px;
+}
+.toolbar button{ background:var(--main-color); color:white; border:none; padding:8px 14px; border-radius:6px; }
+
+/* 6. GRID */
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap:1rem;
+}
+.gallery div{ background:#c7d2fe; padding:20px; text-align:center; border-radius:8px; }
+
+/* 7. MEDIA QUERY - MOBILE FIRST */
+.layout{ display:grid; grid-template-columns:1fr; gap:1rem; }
+.layout div{ background:#bbf7d0; padding:20px; border-radius:8px; }
+@media (min-width: 48rem){
+  .layout{ grid-template-columns: 2fr 1fr; }
+}
+
+/* 8. FLUID TYPOGRAPHY */
+.fluid h1{ font-size: clamp(1.5rem, 5vw, 3rem); margin:0; }
+
+/* 9. CUSTOM PROPERTY */
+.token-btn{ background:var(--main-color); color:white; padding:var(--space); border:none; border-radius:6px; }
+
+/* 10. CONTAINER QUERY */
+.card-wrap{ container-type: inline-size; border:1px solid #ccc; padding:10px; }
+.card-wrap .card{ background:#fef3c7; padding:15px; }
+@container (min-width: 400px){
+  .card-wrap .card{ display:flex; justify-content:space-between; background:#fde68a; }
+}
+
+/* 11. :has() */
+.has-card{ border:2px solid #ccc; padding:10px; margin:5px 0; }
+.has-card:has(img){ border:2px solid black; }
+
+/* 12. LOGICAL */
+.logical{ margin-inline-start:1rem; padding-inline:1rem; background:#e0f2fe; }
+
+/* 13. NESTING */
+.nest-card{ background:white; border:1px solid #ddd; padding:15px; }
+.nest-card h2{ color:blue; }
+.nest-card:hover{ box-shadow:0 5px 10px gray; }
+
+/* 14. TRANSITION */
+.trans-btn{
+  background:blue; color:white; padding:10px 20px; border:none; border-radius:6px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.trans-btn:hover{ background:darkblue; transform:scale(1.05); }
+
+/* 15. ANIMATION */
+@keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+.loader{
+  width:40px; height:40px; border:4px solid #ddd;
+  border-top:4px solid blue; border-radius:50%;
+  animation: spin 1s linear infinite;
+}
+
+/* 16. BEM */
+.bem-card{ background:white; border:1px solid #ddd; padding:15px; }
+.bem-card__title{ font-size:1.5rem; color:#111; }
+.bem-card--big{ padding:2rem; background:#fef9c3; }
+
+/* 18. FOCUS */
+button:focus-visible{ outline:3px solid orange; outline-offset:2px; }
+
+/* 16. REDUCED MOTION */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+<body>
+
+<header><h1>Module 2 - Advanced CSS - All Topics in One Page</h1></header>
+
+<section class="cascade"><h2>1. Cascade - Last Rule Wins</h2><p>This text will be in Blue</p></section>
+
+<section class="spec"><h2>2. Specificity - ID Wins</h2><div class="card" id="app"><p>This text is Blue - ID has more power</p></div></section>
+
+<section class="inherit"><h2>3. Inheritance - Parent to Child</h2><p>This p will also be in red color</p></section>
+
+<section><h2>4. Box Model</h2><div class="box">Content + Padding + Border + Margin</div></section>
+
+<section><h2>5. Flexbox - One Row</h2><div class="toolbar"><b>Logo</b><div><button>Login</button> <button>SignUp</button></div></div></section>
+
+<section><h2>6. Grid - Gallery</h2><div class="gallery"><div>Card 1</div><div>Card 2</div><div>Card 3</div><div>Card 4</div></div></section>
+
+<section><h2>7. Media Query - 1 Column in Mobile, 2 Columns in Laptop</h2><div class="layout"><div>Main Content</div><div>Sidebar</div></div><p>Resize the window to see the change</p></section>
+
+<section class="fluid"><h2>8. Fluid Typography - clamp()</h2><h1>Font changes with screen size</h1></section>
+
+<section><h2>9. Custom Property - Variable</h2><button class="token-btn">Main Color Button</button></section>
+
+<section><h2>10. Container Query - Based on Box</h2><div class="card-wrap"><div class="card"><span>Card Title</span><span>Price</span></div></div></section>
+
+<section><h2>11. :has() - Border if image inside</h2><div class="has-card">No Image - Light Border</div><div class="has-card"><img src="https://via.placeholder.com/60" alt="demo"> <br>Has Image - Dark Border</div></section>
+
+<section><h2>12. Logical Property</h2><div class="logical">Gap from Start - Changes with language</div></section>
+
+<section><h2>13. Nesting + Hover</h2><div class="nest-card"><h2>Hover Me</h2><p>Shadow will appear</p></div></section>
+
+<section><h2>14. Transition</h2><button class="trans-btn">Hover - Changes slowly</button></section>
+
+<section><h2>15. Animation</h2><div class="loader"></div><p>It keeps rotating</p></section>
+
+<section><h2>17. BEM</h2><div class="bem-card bem-card--big"><h2 class="bem-card__title">BEM Card Title</h2><p>You can understand from the name itself - card__title, card--big</p></div></section>
+
+<section><h2>18. Accessibility - Focus</h2><button>Press Tab - Orange Outline will appear</button></section>
+
+</body>
+</html>
